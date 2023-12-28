@@ -1,0 +1,8 @@
+.nav-link{
+    transition: color .5s ease-in-out, box-shadow .5s ease-in-out;
+}
+.nav-link:hover{
+    
+    box-shadow: inset 100px 0 0 0 grey;
+    color: white;
+}
