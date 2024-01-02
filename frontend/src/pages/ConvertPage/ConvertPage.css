@@ -20,7 +20,8 @@
         display: flex;
         flex-direction: row;
         justify-content:center;
-        gap: 10px 100px; 
+        gap: 100px 100px;
+        padding:200px; 
     }
 
     .sendPhoto,.receivedPhoto
@@ -54,9 +55,6 @@
   
         height:200px;
         width:200px;
-        position:absolute;
-        top:0;
-        left:0;
         opacity:0;
         cursor:pointer;
       }
@@ -77,4 +75,7 @@
         margin-left: 32%;
         color: #FFFFFF;
         text-align: center;
+      }
+      .loader.convert{
+        margin:0px;
       }
