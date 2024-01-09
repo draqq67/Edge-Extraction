@@ -8,6 +8,12 @@ import "./ConvertPage.css";
 export default function ConvertPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [edgePhoto, setEdgePhoto] = useState(null);
+  const [timings, setTimings] = useState({
+    smooth: 0,
+    sobel: 0,
+    applyNonMaxSuppression: 0,
+    final: 0,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -15,8 +21,14 @@ export default function ConvertPage() {
     if (imageUrl.trim() !== "") {
       try {
         // Call your function to handle the URL here
+        const startTotal = performance.now();
         const finalPhoto = await handleUrl(imageUrl);
+        const endTotal = performance.now();
         setEdgePhoto(finalPhoto);
+        setTimings((prevTimings) => ({
+          ...prevTimings,
+          total: endTotal - startTotal,
+        }))
       } catch (error) {
         console.error("Error processing the URL:", error);
       }
@@ -24,50 +36,90 @@ export default function ConvertPage() {
       alert("Please enter a valid image URL before submitting.");
     }
   };
-
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const handleUrl = async (url) => {
     try {
-      // Perform actions with the URL, for example, apply image processing functions
-      console.log("Using URL:", url);
-      const smoothed = await smooth(url); // Assuming smooth can handle URL directly
+      const startSmooth = performance.now();
+      const smoothed = await smooth(url);
+      const endSmooth = performance.now();
+      setTimings((prevTimings) => ({
+        ...prevTimings,
+        smooth: endSmooth - startSmooth,
+      }));
+
+      await delay(1000); // Introducing a 1-second delay
+
+      const startSobel = performance.now();
       const { gradientPhoto, gradientIntensity, gradientDirection } = await sobel(smoothed);
-      console.log(gradientPhoto)
+      const endSobel = performance.now();
+      setTimings((prevTimings) => ({
+        ...prevTimings,
+        sobel: endSobel - startSobel,
+      }));
+
+      await delay(1000); // Introducing a 1-second delay
+
+      const startNonMax = performance.now();
       const nonMaxPhoto = await applyNonMaxSuppression(gradientPhoto, gradientIntensity, gradientDirection);
+      const endNonMax = performance.now();
+      setTimings((prevTimings) => ({
+        ...prevTimings,
+        applyNonMaxSuppression: endNonMax - startNonMax,
+      }));
+
+      await delay(1000); // Introducing a 1-second delay
+
+      const startFinal = performance.now();
       const finalPhoto = await final(nonMaxPhoto, 100, 140);
+      const endFinal = performance.now();
+      setTimings((prevTimings) => ({
+        ...prevTimings,
+        final: endFinal - startFinal,
+      }));
+
       return finalPhoto;
     } catch (error) {
       console.error("Error processing the URL:", error);
-      throw error; // Rethrow the error to be caught by the calling function
+      throw error;
     }
   };
+  
 
   return (
     <div className="convertContainer">
       <h1 className="convertTitle"> Convert your photo</h1>
       <div className="photos">
-        <form className="send-photo" onSubmit={handleSubmit}>
-          {/* <div className="file-upload"> */}
+        <form className="send_photo" onSubmit={handleSubmit}>
             <input
               type="url"
+              className="input_url"
               id="image"
               name="image"
-              placeholder="Enter Image URL"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
+              pattern="https?://.+\.(png|jpg|jpeg)\?.*|data:image\/jpeg;base64,.+)$"
             />
-          {/* </div> */}
+            <label for="image" class="image_label">Enter Image URL</label>
           <button type="submit" className="filesubmit">
             Submit
           </button>
-          <div className="sendText">Please enter your image URL</div>
         </form>
-        <div className="receivedphoto">
+        <div className="received_photo">
           {edgePhoto !== null ? (
+            <>
             <img className="edgephoto" src={edgePhoto} alt="Edge Detection Result" />
+            <a href={edgePhoto} download> Download the photo here</a>
+            <div className="timing-info">
+                <p>Time taken by smooth function: {timings.smooth} milliseconds</p>
+                <p>Time taken by sobel function: {timings.sobel} milliseconds</p>
+                <p>Time taken by applyNonMaxSuppression function: {timings.applyNonMaxSuppression} milliseconds</p>
+                <p>Time taken by edgeTrackingByHysteresis function: {timings.final} milliseconds</p>
+                <p>Total time taken: {timings.total} milliseconds</p>
+              </div>
+            </>
           ) : (
             <div className="loader convert"></div>
           )}
-          <div className="downloadLink">Link to Download</div>
         </div>
       </div>
     </div>

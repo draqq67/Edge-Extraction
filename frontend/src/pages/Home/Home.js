@@ -33,7 +33,7 @@ export default function Home(){
                                     Pagina de album unde voi avea o colectie de poze pe care algoritmul meu le genereaza
                                 </li>
                                 <li>
-                                    O pagina in care un utilizator poate incarca o poza si sa ii trimita pe mail rezulatul
+                                    O pagina in care un utilizator poate incarca un link de la o poza, iar acesta va putea downloada imaginea trecuta prin algoritm
                                 </li>
                             </ul>
                         </li>
@@ -42,9 +42,6 @@ export default function Home(){
                             <ol>
                                 <li>
                                     Realizarea Lay-outului pagininilor folosind Html si CSS
-                                </li>
-                                <li>
-                                    Adaugare de efecte javascript
                                 </li>
                                 <li>
                                     Realizarea Algoritmului de detectare a marginilor
@@ -65,14 +62,6 @@ export default function Home(){
                                 </li>
                                 <li>
                                     Realizarea paginii de convertire
-                                    <ul>
-                                        <li>
-                                        Adaugarea pozelor direct in site
-                                        </li>
-                                        <li>
-                                        Adaugarea functionalitatii de download/ trimitere a raspunsului pe mail
-                                        </li>
-                                    </ul>
                                 </li>
                             </ol>
                         </li>

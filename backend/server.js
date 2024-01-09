@@ -12,7 +12,6 @@
   const app = express();
   const port = 5000; // the port where i get on my local host the express server
 
-  //api from where do i get the photos
   app.use(cors()); // to pass the headers
   app.use(express.json()); // Middleware to parse JSON requests
 
@@ -121,7 +120,6 @@
     }
   })
 
-  let doubleThres = null;
   let edgeTrack = null;
   app.get('/api/final', async(req,res) =>{
     try{

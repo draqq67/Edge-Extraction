@@ -5,6 +5,7 @@
     margin-bottom: 2px;
     justify-content: center;
     margin-top: 5px;
+    
 }
 .initialPhoto,.mirroredPhoto,.smoothPhoto,.nonmaxPhoto,.finalPhoto{
     max-width:200px;
@@ -12,6 +13,9 @@
     width:auto;
     height:auto;
     margin: 10px;
+    display: flex;
+    flex-direction: row;
+    gap:10px 10px
 }
 .finalPhoto{
     border: solid 2px black;
@@ -40,4 +44,17 @@
         padding: 3px;      
         transform: rotate(-45deg);
         -webkit-transform: rotate(-45deg);
+}
+@media only screen and (max-width:1000px) {
+    .mirroredPhoto,.nonmaxPhoto{
+        display: none;
+    }
+    .transform.mirror,.transform.nonmax{
+        display: none;
+    }
+}
+@media only screen and (max-width:1000px) {
+    .smoothPhoto,.transform.smooth{
+        display: none;
+    }
 }

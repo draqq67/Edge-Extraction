@@ -67,7 +67,7 @@ async function applyNonMaxSuppression(imagePath, gradientIntensity, gradientDire
       const G2 = gradientIntensity[(y + 1) * (img.width - 2) + (x + 1)];
 
       // Perform non-maximum suppression
-      if ((G1 > gradientIntensity[index1] && G1 > G2) || G1 > 0.5) {
+      if ((G1 > gradientIntensity[index1] && G1 > G2) || G1 > 0.5) { // 0.5 is my threshold added to not suppress too much
         // Set the pixel color to the intensity of G1 if it is a local maximum
         data[currentIndex] = G1;
         data[currentIndex + 1] = G1;

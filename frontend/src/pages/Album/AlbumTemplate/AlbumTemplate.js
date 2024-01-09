@@ -2,10 +2,10 @@ import './AlbumTemplate.css';
 
 export default function AlbumTemplate({ data, mirror,smooth,nonmax,final, numberOfElements }) {
 
-// console.log(data)
-// console.log(mirror)
-// console.log(smooth)
-// console.log(nonmax)
+console.log(data)
+console.log(mirror)
+console.log(smooth)
+console.log(nonmax)
 console.log(final)
 
   const elements = [];
@@ -24,7 +24,7 @@ console.log(final)
             <div className="loading">Loading...</div>
           )}
         </div>
-        <div className="transform">
+        <div className="transform mirror">
             <p className='transform_text'>Mirror</p>
             <i class="fa fa-arrow-right"></i>
             </div>
@@ -35,7 +35,7 @@ console.log(final)
             <div className="loading">Loading...</div>
           )}
         </div>
-        <div className="transform">
+        <div className="transform smooth">
             <p className='transform_text'>Smoothen the photo</p>
             <i class="fa fa-arrow-right"></i>
             </div>
@@ -46,7 +46,7 @@ console.log(final)
             <div className="loading">Loading...</div>
           )}
         </div>
-        <div className="transform">
+        <div className="transform nonmax">
             <p className='transform_text'>Finding gradients & supress non-max pixels</p>
             <i class="fa fa-arrow-right"></i>
             </div>
