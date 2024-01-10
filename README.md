@@ -26,7 +26,7 @@ The Canny Edge Detector is a powerful algorithm for detecting edges in images, w
 
 The project consists into two folders named backend and frontend
 
-   ####**Frontend**
+   #### **Frontend**
       - have made a react application using node js
       - the important pages that contain the alghoritm are ConvertPage and AlbumPage
          #####***Convert Page***
@@ -37,7 +37,7 @@ The project consists into two folders named backend and frontend
             - The user selects from a dropdown a dog breed and gets a result of an album of 5 dogs with their photo taken from original->mirror->smoothened->non max suprresed->final result
             - the data from the dog breed are connected through the api from the dog api. I send this breed to my server and I am going to explain this part on the backend part of the project.
 
-   ####**Backend**
+   #### **Backend**
       - i setted up this backend with express js as it is the most used server side framework for node js
       - i proxied on package.json from frontend directory the port(5000) i am using for the express server
       -
@@ -45,7 +45,7 @@ The project consists into two folders named backend and frontend
       - from then i have the data of my photos to be taken through the alghoritm and posted into the page for every part of my alghoritm : /api/mirror ; /api/smooth; api/nonmax ; api/final
       - now i have the data from the dog api in every page of my express server that i can fetch from my ***Album.js page*** to have it rendered on my page
 
-   ####**Alghorithm step by step explained in my code**
+   #### **Alghorithm step by step explained in my code**
       - In the backend part of the server, i added before that a mirror effect 
       - I copied the Canny Edge Detector to the frontend part of the code because i couldn't acces it for the convertPage
          - ***Alghoritm set up***
