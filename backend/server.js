@@ -25,9 +25,9 @@
       rasa = breed;
       
       // Fetch new data when the breed is updated
-      const newUrl = `https://dog.ceo/api/breed/${rasa}/images`;
+      const newUrl = `https://dog.ceo/api/breed/${rasa}/images/random/${numberOfElements}`;
       const newData = await fetchPhotos(newUrl);
-      const firstNPhotos = newData.message.slice(0, numberOfElements);
+      const firstNPhotos = newData.message;
       selectedUrls = firstNPhotos;
   
       // Send a response indicating the breed update
@@ -39,8 +39,8 @@
   });
   
   const fetchSelectedUrls = async () => {
-    const data = await fetchPhotos(`https://dog.ceo/api/breed/${rasa}/images`);
-    return data.message.slice(0, numberOfElements);
+    const data = await fetchPhotos(`https://dog.ceo/api/breed/${rasa}/images/random/${numberOfElements}`);
+    return data.message;
   };
   
   app.get('/api/data', async (req, res) => {

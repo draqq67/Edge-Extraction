@@ -7,6 +7,7 @@ import "./ConvertPage.css";
 
 export default function ConvertPage() {
   const [imageUrl, setImageUrl] = useState("");
+  const [initialPhoto,setInitialPhoto]=useState("")
   const [edgePhoto, setEdgePhoto] = useState(null);
   const [timings, setTimings] = useState({
     smooth: 0,
@@ -17,7 +18,8 @@ export default function ConvertPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setEdgePhoto(null)
+    setInitialPhoto(imageUrl)
     if (imageUrl.trim() !== "") {
       try {
         // Call your function to handle the URL here
@@ -104,9 +106,12 @@ export default function ConvertPage() {
             Submit
           </button>
         </form>
-        <div className="received_photo">
           {edgePhoto !== null ? (
             <>
+            <div className="received_photo">
+              <img src={initialPhoto} alt="initial Photo" className="edgephoto"></img>
+            </div> 
+            <div className="received_photo">
             <img className="edgephoto" src={edgePhoto} alt="Edge Detection Result" />
             <a href={edgePhoto} download> Download the photo here</a>
             <div className="timing-info">
@@ -116,12 +121,12 @@ export default function ConvertPage() {
                 <p>Time taken by edgeTrackingByHysteresis function: {timings.final.toFixed(2)} milliseconds</p>
                 <p>Total time taken: {timings.total.toFixed(2)} milliseconds. This time also take into account setTimeouts of 1 second between each step, </p>
               </div>
+            </div>
             </>
           ) : (
             <div className="loader convert"></div>
           )}
         </div>
       </div>
-    </div>
   );
 }
