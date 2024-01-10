@@ -108,8 +108,12 @@ export default function Album() {
         <AlbumTemplate data={data} mirror={mirror} smooth={smooth} nonmax={nonMax} final={final} numberOfElements={numberOfElements} />
               {/* Display time spent for each fetch */}
               {Object.entries(fetchTimes).map(([url, time]) => (
-                <p key={url}>{`${url}: ${time.toFixed(2)} ms`}</p>
-              ))}
+            <p key={url}>
+              {url === "/api/nonmax"
+             ? `${url} and sobel operator : ${time.toFixed(2)} ms`
+             : `${url}: ${time.toFixed(2)} ms`}
+           </p>
+))}
         </> 
         ) : (
         <div class='loader'></div>

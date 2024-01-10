@@ -27,7 +27,7 @@ export default function ConvertPage() {
         setEdgePhoto(finalPhoto);
         setTimings((prevTimings) => ({
           ...prevTimings,
-          total: endTotal - startTotal,
+          total: endTotal - startTotal
         }))
       } catch (error) {
         console.error("Error processing the URL:", error);
@@ -110,11 +110,11 @@ export default function ConvertPage() {
             <img className="edgephoto" src={edgePhoto} alt="Edge Detection Result" />
             <a href={edgePhoto} download> Download the photo here</a>
             <div className="timing-info">
-                <p>Time taken by smooth function: {timings.smooth} milliseconds</p>
-                <p>Time taken by sobel function: {timings.sobel} milliseconds</p>
-                <p>Time taken by applyNonMaxSuppression function: {timings.applyNonMaxSuppression} milliseconds</p>
-                <p>Time taken by edgeTrackingByHysteresis function: {timings.final} milliseconds</p>
-                <p>Total time taken: {timings.total} milliseconds</p>
+                <p>Time taken by smooth function: {timings.smooth.toFixed(2)} milliseconds</p>
+                <p>Time taken by sobel function: {timings.sobel.toFixed(2)} milliseconds</p>
+                <p>Time taken by applyNonMaxSuppression function: {timings.applyNonMaxSuppression.toFixed(2)} milliseconds</p>
+                <p>Time taken by edgeTrackingByHysteresis function: {timings.final.toFixed(2)} milliseconds</p>
+                <p>Total time taken: {timings.total.toFixed(2)} milliseconds. This time also take into account setTimeouts of 1 second between each step, </p>
               </div>
             </>
           ) : (
