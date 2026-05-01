@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge Extraction — Home</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <main>
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Canny Edge Detector</h1>
+        <p class="hero-sub">
+          An interactive educational platform for learning the Canny edge detection algorithm —
+          one of the most widely used techniques in computer vision.
+        </p>
+        <div class="hero-actions">
+          <a href="convert.html" class="btn-primary">Try It Now</a>
+          <a href="album.html"   class="btn-outline">View Album</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="pipeline-demo">
+          <div class="pd-box" style="opacity:.35">Original</div>
+          <span class="pd-arrow">→</span>
+          <div class="pd-box" style="opacity:.55">Grayscale</div>
+          <span class="pd-arrow">→</span>
+          <div class="pd-box" style="opacity:.75">Gradient</div>
+          <span class="pd-arrow">→</span>
+          <div class="pd-box" style="opacity:.95">Edges</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Algorithm Steps ── -->
+    <section class="algo-section">
+      <div class="section-wrap">
+        <h2>How the Algorithm Works</h2>
+        <p class="section-lead">
+          Canny combines four sequential steps to produce thin, clean, and robust edges —
+          superior to simpler filters. Click <em>Learn more</em> on any step to see the math.
+        </p>
+
+        <div class="steps-grid">
+
+          <div class="step-card">
+            <div class="step-head" style="border-color:#667eea">
+              <span class="step-no" style="color:#667eea">01</span>
+              <span class="step-ico">🔲</span>
+              <h3>Grayscale & Gaussian Blur</h3>
+            </div>
+            <p>The image is converted to grayscale — color is irrelevant for edge detection.
+               A Gaussian filter then smooths the image to suppress noise that would create false edges.</p>
+            <details>
+              <summary>Learn more</summary>
+              <div class="detail-body">
+                <p>The Gaussian kernel assigns higher weight to central pixels. Noise is removed
+                   before gradient computation to avoid detecting noise as edges.</p>
+                <code>Kernel (3×3, divisor = 16):
+[[1, 2, 1],
+ [2, 4, 2],
+ [1, 2, 1]]</code>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-card">
+            <div class="step-head" style="border-color:#f59e0b">
+              <span class="step-no" style="color:#f59e0b">02</span>
+              <span class="step-ico">↗</span>
+              <h3>Sobel Gradient</h3>
+            </div>
+            <p>Two Sobel kernels compute the image gradient in horizontal (Gx) and vertical (Gy) directions.
+               Magnitude and direction are calculated for every pixel.</p>
+            <details>
+              <summary>Learn more</summary>
+              <div class="detail-body">
+                <p>G = √(Gx² + Gy²) measures edge strength. θ = atan2(Gy, Gx) gives the edge direction.
+                   Brighter output pixels indicate stronger edges.</p>
+                <code>Kx = [[-1,0,1],[-2,0,2],[-1,0,1]]
+Ky = [[ 1,2,1],[ 0,0,0],[-1,-2,-1]]
+G  = √(Gx² + Gy²)</code>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-card">
+            <div class="step-head" style="border-color:#10b981">
+              <span class="step-no" style="color:#10b981">03</span>
+              <span class="step-ico">✂</span>
+              <h3>Non-Maximum Suppression</h3>
+            </div>
+            <p>Only local maximum pixels along the gradient direction are kept.
+               All others are suppressed, thinning wide edge bands into single-pixel-wide lines.</p>
+            <details>
+              <summary>Learn more</summary>
+              <div class="detail-body">
+                <p>For each pixel the two neighbors in its gradient direction are checked.
+                   If the pixel is not the local maximum it is set to zero — eliminating blurry, thick edges.</p>
+                <code>If G(x,y) &lt; G(neighbor₁) OR
+   G(x,y) &lt; G(neighbor₂):
+→ suppress pixel (set to 0)</code>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-card">
+            <div class="step-head" style="border-color:#ef4444">
+              <span class="step-no" style="color:#ef4444">04</span>
+              <span class="step-ico">🎯</span>
+              <h3>Hysteresis Thresholding</h3>
+            </div>
+            <p>Two thresholds classify pixels as strong edges, weak edges, or non-edges.
+               Weak edges connected to strong edges are kept; isolated weak edges are discarded.</p>
+            <details>
+              <summary>Learn more</summary>
+              <div class="detail-body">
+                <p>This removes noise while preserving real edge continuity.
+                   You can adjust these thresholds interactively on the Convert page.</p>
+                <code>I &gt; T_high  →  strong edge  ✓
+I &lt; T_low   →  non-edge   ✗
+T_low ≤ I ≤ T_high  →  weak edge
+  (kept only if adjacent to strong edge)</code>
+              </div>
+            </details>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Guide cards ── -->
+    <section class="guide-section">
+      <div class="section-wrap">
+        <h2>Get Started</h2>
+        <p class="section-lead">Two pages let you explore the algorithm interactively.</p>
+        <div class="guide-cards">
+          <a href="convert.html" class="guide-card">
+            <div class="guide-icon" style="background:#eef2ff;color:#667eea">📷</div>
+            <h3>Convert Page</h3>
+            <p>Paste any image URL and apply Canny step-by-step. Adjust low and high thresholds with sliders and observe the effect in real time.</p>
+            <span class="guide-link">Go to Convert →</span>
+          </a>
+          <a href="album.html" class="guide-card">
+            <div class="guide-icon" style="background:#d1fae5;color:#10b981">🐕</div>
+            <h3>Album Page</h3>
+            <p>Select a dog breed and see 5 images processed simultaneously through every stage of the pipeline — perfect for visual comparison.</p>
+            <span class="guide-link">Go to Album →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    requireAuth();
+    injectNavbar('home.html');
+    injectFooter();
+  </script>
+</body>
+</html>

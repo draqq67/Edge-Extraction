@@ -1,60 +1,169 @@
+.album-template {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
-.photocontainer{
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2px;
-    justify-content: center;
-    margin-top: 5px;
-    
+/* ── One dog row ─────────────────────────────────────── */
+.dog-row {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
 }
-.initialPhoto,.mirroredPhoto,.smoothPhoto,.nonmaxPhoto,.finalPhoto{
-    max-width:200px;
-    max-height:200px; 
-    width:auto;
-    height:auto;
-    margin: 10px;
-    display: flex;
-    flex-direction: row;
-    gap:10px 10px
+
+.dog-index {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #9ca3af;
+  border-right: 1px solid #e5e7eb;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-.finalPhoto{
-    border: solid 2px black;
+
+/* ── Scrollable pipeline ─────────────────────────────── */
+.pipeline-row {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 0.75rem 0.75rem;
+  gap: 0;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb transparent;
 }
-.photo{
-    width:100%;
-    height:100%;
+
+.pipeline-row::-webkit-scrollbar {
+  height: 4px;
 }
-.transform{
-    display: flex;
+
+.pipeline-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pipeline-row::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+/* ── Single stage cell ───────────────────────────────── */
+.stage-cell {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.stage-label {
+  display: none; /* shown via tooltip-like structure on wider screens */
+}
+
+/* Override: show label above photo on all sizes */
+.stage-cell {
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.stage-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+}
+
+.stage-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stage-final {
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.12);
+}
+
+.stage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stage-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #e5e7eb;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Arrow between cells */
+.stage-arrow {
+  font-size: 1.4rem;
+  color: #d1d5db;
+  padding: 0 0.25rem;
+  margin-top: 1.4rem;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .album-template {
+    padding: 0.75rem 1rem;
+  }
+
+  .stage-photo {
+    width: 85px;
+    height: 85px;
+  }
+
+  .stage-label {
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dog-row {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width:55px;
-    margin-right: 10px;
-}
-.transform_text{
-    align-items: center;
-    width: 100%;
-}
-.arrow_right{
-        margin-left:5%;
-        border: solid black;
-        border-width: 0 3px 3px 0;
-        display: inline-block;
-        padding: 3px;      
-        transform: rotate(-45deg);
-        -webkit-transform: rotate(-45deg);
-}
-@media only screen and (max-width:1000px) {
-    .mirroredPhoto,.nonmaxPhoto{
-        display: none;
-    }
-    .transform.mirror,.transform.nonmax{
-        display: none;
-    }
-}
-@media only screen and (max-width:1000px) {
-    .smoothPhoto,.transform.smooth{
-        display: none;
-    }
+    align-items: stretch;
+  }
+
+  .dog-index {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.4rem 0.75rem;
+    justify-content: flex-start;
+  }
+
+  .stage-photo {
+    width: 75px;
+    height: 75px;
+  }
 }

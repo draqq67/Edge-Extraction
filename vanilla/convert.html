@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge Extraction — Convert</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/convert.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <main class="convert-page">
+
+    <!-- Header -->
+    <div class="page-header">
+      <h1>Convert Your Photo</h1>
+      <p>Paste an image URL, adjust the hysteresis thresholds, and apply the Canny Edge Detection algorithm. All processing runs in your browser.</p>
+    </div>
+
+    <div class="convert-body">
+
+      <!-- ── Sidebar ── -->
+      <aside class="sidebar">
+        <form id="convertForm" novalidate>
+
+          <!-- URL input -->
+          <div class="ctrl-block">
+            <label for="imageUrl" class="ctrl-label">Image URL</label>
+            <input id="imageUrl" type="text" class="url-input"
+                   placeholder="https://example.com/photo.jpg" />
+            <div class="msg-error url-error" id="urlError" hidden></div>
+            <small class="ctrl-hint">Supports https://…jpg|.jpeg|.png or base64 data: URLs</small>
+          </div>
+
+          <!-- Threshold sliders -->
+          <div class="ctrl-block threshold-box">
+            <div class="threshold-title">
+              Hysteresis Thresholds
+              <span class="info-badge" title="Two thresholds classify pixels as strong edges, weak edges, or non-edges. Experiment with different values to see the effect.">?</span>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-row">
+                <label for="lowT">Low threshold</label>
+                <strong id="lowVal">100</strong>
+              </div>
+              <input id="lowT" type="range" min="0" max="254" value="100" />
+              <small>Pixels below this value are discarded (non-edge).</small>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-row">
+                <label for="highT">High threshold</label>
+                <strong id="highVal">140</strong>
+              </div>
+              <input id="highT" type="range" min="1" max="255" value="140" />
+              <small>Pixels above this value become strong edges.</small>
+            </div>
+
+            <div class="msg-error" id="threshError" hidden>
+              ⚠ Low threshold must be less than high threshold.
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn-primary submit-btn">Apply Canny</button>
+        </form>
+
+        <!-- Progress steps -->
+        <div class="progress-box" id="progressBox" hidden>
+          <p class="progress-heading">Pipeline progress</p>
+          <div id="progSteps"></div>
+          <p class="prog-desc" id="progDesc"></p>
+        </div>
+      </aside>
+
+      <!-- ── Main result area ── -->
+      <section class="convert-main">
+
+        <div class="empty-state" id="emptyState">
+          <span class="empty-icon">🖼</span>
+          <p>Enter an image URL and click <strong>Apply Canny</strong> to see the result here.</p>
+        </div>
+
+        <div id="photosGrid" class="photos-grid" hidden>
+          <div class="photo-card" id="cardOriginal">
+            <div class="photo-card-header">Original</div>
+            <div class="photo-wrapper">
+              <img id="imgOriginal" alt="Original" class="result-photo" />
+            </div>
+          </div>
+          <div class="photo-card" id="cardResult" hidden>
+            <div class="photo-card-header">Edge Detection Result</div>
+            <div class="photo-wrapper">
+              <img id="imgResult" alt="Edge Detection Result" class="result-photo" />
+            </div>
+            <a id="downloadLink" class="download-link" download="edge_result.png">⬇ Download Result</a>
+          </div>
+          <div class="photo-card" id="cardProcessing" hidden>
+            <div class="photo-card-header">Processing…</div>
+            <div class="photo-wrapper loader-wrapper">
+              <div class="spinner" id="cardSpinner"></div>
+              <p class="loader-label" id="loaderLabel"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timing -->
+        <div class="timing-card" id="timingCard" hidden>
+          <h3>Performance Breakdown</h3>
+          <div id="timingRows" class="timing-rows"></div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/canny/smooth.js"></script>
+  <script src="js/canny/sobel.js"></script>
+  <script src="js/canny/nonmax.js"></script>
+  <script src="js/canny/hysteresis.js"></script>
+  <script src="js/convert.js"></script>
+  <script>
+    requireAuth();
+    injectNavbar('convert.html');
+    injectFooter();
+    initConvert();
+  </script>
+</body>
+</html>

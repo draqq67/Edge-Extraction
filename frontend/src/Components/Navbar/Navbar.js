@@ -1,24 +1,44 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate, NavLink } from 'react-router-dom';
+import "./Navbar.css";
 
-import "./Navbar.css"
-function BasicExample() {
+export default function AppNavbar() {
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
-    <Navbar expand="lg" className="p-3 mb- bg-secondary bg-gradient">
-        <Navbar.Brand href="#top">Edge Extraction</Navbar.Brand>
-        <Navbar.Toggle className='navbar-toggler ml-auto hidden-sm-up float-xs-right' data-toggle="collapse"
-         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-          aria-label="Toggle navigation"/>
-        <Navbar.Collapse id="basic-navbar-nav">
+    <Navbar expand="lg" className="app-navbar" sticky="top">
+      <Container fluid>
+        <Navbar.Brand as={NavLink} to="/" className="navbar-brand-custom">
+          <span className="brand-icon">◈</span> Edge Extraction
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="main-navbar" className="navbar-toggler-custom" />
+        <Navbar.Collapse id="main-navbar">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/album">Album</Nav.Link>
-            <Nav.Link href="/convert">Convert</Nav.Link>
+            <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/album">Album</Nav.Link>
+            <Nav.Link as={NavLink} to="/convert">Convert</Nav.Link>
+          </Nav>
+          <Nav className="ms-auto align-items-center gap-2">
+            {currentUser && (
+              <span className="navbar-user">
+                👤 {currentUser}
+              </span>
+            )}
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </Nav>
         </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }
-
-export default BasicExample;

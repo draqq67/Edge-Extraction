@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge Extraction — Album</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/album.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <main>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div class="header-row">
+        <div>
+          <h1>Dog Breed Album</h1>
+          <p>Select a breed and watch 5 images pass through every stage of the Canny algorithm — entirely in your browser.</p>
+        </div>
+        <button class="btn-info-toggle" id="infoToggle" aria-expanded="false">
+          Show Stage Info
+        </button>
+      </div>
+    </div>
+
+    <!-- Educational info panel -->
+    <div class="info-panel" id="infoPanel" hidden>
+      <h3>Pipeline Stages Explained</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Mirror</strong>
+          <p>Each image is flipped horizontally — a simple canvas pixel operation.</p>
+        </div>
+        <div class="info-item">
+          <strong>Gaussian Blur</strong>
+          <p>Converts to grayscale then applies a 3×3 weighted average to reduce noise before edge detection.</p>
+        </div>
+        <div class="info-item">
+          <strong>Non-Max Suppression</strong>
+          <p>Sobel gradients are computed; only local maxima along the gradient direction are kept, thinning edges to 1 px.</p>
+        </div>
+        <div class="info-item">
+          <strong>Hysteresis</strong>
+          <p>Double threshold classifies pixels as strong / weak / non-edge. Weak edges connected to strong ones survive.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="album-controls">
+      <form class="breed-form" id="breedForm">
+        <label for="breedSelect">Select Breed:</label>
+        <select id="breedSelect" class="breed-select">
+          <option value="african">African</option>
+          <option value="boxer">Boxer</option>
+          <option value="shiba">Shiba Inu</option>
+          <option value="kelpie">Kelpie</option>
+          <option value="labrador">Labrador</option>
+          <option value="akita">Akita</option>
+        </select>
+        <button type="submit" class="btn-primary breed-btn" id="loadBtn">Load Images</button>
+      </form>
+    </div>
+
+    <!-- Error -->
+    <div class="msg-error album-error" id="albumError" hidden></div>
+
+    <!-- Progress -->
+    <div class="album-progress" id="albumProgress" hidden>
+      <div class="stage-pills" id="stagePills"></div>
+      <p class="stage-desc" id="stageDesc"></p>
+    </div>
+
+    <!-- Results -->
+    <div id="albumResults"></div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">🐕</span>
+      <p>Select a breed and click <strong>Load Images</strong> to begin.</p>
+    </div>
+
+    <!-- Timing -->
+    <div class="timing-section" id="timingSection" hidden>
+      <h3>Processing Times</h3>
+      <div class="timing-list" id="timingList"></div>
+    </div>
+
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/canny/smooth.js"></script>
+  <script src="js/canny/sobel.js"></script>
+  <script src="js/canny/nonmax.js"></script>
+  <script src="js/canny/hysteresis.js"></script>
+  <script src="js/album.js"></script>
+  <script>
+    requireAuth();
+    injectNavbar('album.html');
+    injectFooter();
+    initAlbum();
+  </script>
+</body>
+</html>

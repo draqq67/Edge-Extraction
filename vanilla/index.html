@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge Extraction — Login</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body class="login-body">
+
+  <div class="login-page">
+    <div class="login-card">
+
+      <div class="login-header">
+        <div class="login-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h1>Edge Extraction</h1>
+        <p>Canny Edge Detector — Educational Platform</p>
+      </div>
+
+      <form class="login-form" id="loginForm" novalidate>
+        <div class="msg-error" id="loginError" hidden></div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input id="username" type="text" placeholder="Enter username"
+                 autocomplete="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter password"
+                 autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="btn-primary login-submit">Sign In</button>
+      </form>
+
+      <div class="login-hint">
+        <strong>Demo credentials</strong><br/>
+        Username: <code>student</code> &nbsp;|&nbsp; Password: <code>canny123</code>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Already logged in → go straight to home
+    if (isLoggedIn()) window.location.href = 'home.html';
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const err = document.getElementById('loginError');
+      const u   = document.getElementById('username').value.trim();
+      const p   = document.getElementById('password').value;
+
+      if (!u) { showErr('Username is required.'); return; }
+      if (!p) { showErr('Password is required.'); return; }
+
+      if (login(u, p)) {
+        window.location.href = 'home.html';
+      } else {
+        showErr('Invalid username or password. Please try again.');
+      }
+
+      function showErr(msg) {
+        err.textContent = '⚠ ' + msg;
+        err.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

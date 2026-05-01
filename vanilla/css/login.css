@@ -1,0 +1,123 @@
+.login-body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+/* Header */
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: #fff;
+}
+
+.login-icon svg { width: 28px; height: 28px; }
+
+.login-header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: .2rem;
+}
+
+.login-header p {
+  color: #6b7280;
+  font-size: .875rem;
+}
+
+/* Form */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.form-group label {
+  font-size: .875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input {
+  padding: .72rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+}
+
+.form-group input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102,126,234,.15);
+}
+
+.login-submit {
+  width: 100%;
+  margin-top: .3rem;
+  padding: .875rem;
+  font-size: 1rem;
+}
+
+.login-submit:hover { transform: translateY(-1px); }
+
+/* Hint */
+.login-hint {
+  margin-top: 1.4rem;
+  padding: .9rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-align: center;
+  font-size: .83rem;
+  color: #6b7280;
+  line-height: 1.7;
+}
+
+.login-hint code {
+  background: #e5e7eb;
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  font-size: .78rem;
+  color: #374151;
+}
+
+/* Error (uses .msg-error from base.css, just add margin) */
+#loginError { margin-bottom: .2rem; }
+
+@media (max-width: 480px) {
+  .login-card { padding: 1.75rem 1.25rem; }
+}

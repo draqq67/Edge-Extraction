@@ -1,76 +1,43 @@
 import './AlbumTemplate.css';
 
-export default function AlbumTemplate({ data, mirror,smooth,nonmax,final, numberOfElements }) {
+const STAGES = [
+  { key: 'initial', label: 'Original',    color: '#6b7280' },
+  { key: 'mirror',  label: 'Mirror',      color: '#8b5cf6' },
+  { key: 'smooth',  label: 'Smooth',      color: '#667eea' },
+  { key: 'nonmax',  label: 'Non-Max',     color: '#10b981' },
+  { key: 'final',   label: 'Final',       color: '#ef4444' },
+];
 
-console.log(data)
-console.log(mirror)
-console.log(smooth)
-console.log(nonmax)
-console.log(final)
-
-  const elements = [];
+export default function AlbumTemplate({ data, mirror, smooth, nonmax, final, numberOfElements }) {
+  const rows = [];
   for (let i = 0; i < numberOfElements; i++) {
-    const initialPhoto = data[i];
-    const mirrorPhoto = mirror[i];
-    const smoothPhoto = smooth[i];
-    const nonMaxPhoto = nonmax[i];
-    const finalPhoto = final[i];
-    elements.push(
-      <div className="photocontainer">
-        <div className="initialPhoto">
-          {initialPhoto !==null ? (
-            <img className="photo" src={initialPhoto} alt={`Initial Photo ${i}`} />
-          ) : (
-            <div className="loading">Loading...</div>
-          )}
-        </div>
-        <div className="transform mirror">
-            <p className='transform_text'>Mirror</p>
-            <i class="fa fa-arrow-right"></i>
+    const photos = [data?.[i], mirror?.[i], smooth?.[i], nonmax?.[i], final?.[i]];
+    rows.push(
+      <div className="dog-row" key={i}>
+        <div className="dog-index">#{i + 1}</div>
+        <div className="pipeline-row">
+          {STAGES.map((stage, j) => (
+            <div className="stage-cell" key={stage.key}>
+              <span className="stage-label" style={{ color: stage.color }}>{stage.label}</span>
+              <div className={`stage-photo${stage.key === 'final' ? ' stage-final' : ''}`}>
+                {photos[j] ? (
+                  <img
+                    src={photos[j]}
+                    alt={`${stage.label} ${i + 1}`}
+                    className="stage-img"
+                  />
+                ) : (
+                  <div className="stage-loading">
+                    <div className="mini-spinner" style={{ borderTopColor: stage.color }} />
+                  </div>
+                )}
+              </div>
+              {j < STAGES.length - 1 && <span className="stage-arrow">›</span>}
             </div>
-        <div className="mirroredPhoto">
-          {mirrorPhoto !==null ? (
-            <img className="photo" src={mirrorPhoto} alt={`Mirrored Photo ${i}`} />
-          ) : (
-            <div className="loading">Loading...</div>
-          )}
-        </div>
-        <div className="transform smooth">
-            <p className='transform_text'>Smoothen the photo</p>
-            <i class="fa fa-arrow-right"></i>
-            </div>
-        <div className="smoothPhoto">
-          {smoothPhoto!==null ? (
-            <img className="photo" src={smoothPhoto} alt={`Mirrored Photo ${i}`} />
-          ) : (
-            <div className="loading">Loading...</div>
-          )}
-        </div>
-        <div className="transform nonmax">
-            <p className='transform_text'>Finding gradients & supress non-max pixels</p>
-            <i class="fa fa-arrow-right"></i>
-            </div>
-        <div className="nonmaxPhoto">
-          {nonMaxPhoto !==null? (
-            <img className="photo" src={nonMaxPhoto} alt={`Mirrored Photo ${i}`} />
-          ) : (
-            <div className="loading">Loading...</div>
-          )}
-        </div>
-        <div className="transform">
-            <p className='transform_text'>Double Threshold & Edge Tracking</p>
-            <i class="fa fa-arrow-right"></i>
-            </div>
-        <div className="finalPhoto">
-          {finalPhoto !==null ? (
-            <img className="photo" src={finalPhoto} alt={`Mirrored Photo ${i}`} />
-          ) : (
-            <div className="loading">Loading...</div>
-          )}
+          ))}
         </div>
       </div>
     );
   }
-
-  return <>{elements}</>;
+  return <div className="album-template">{rows}</div>;
 }
